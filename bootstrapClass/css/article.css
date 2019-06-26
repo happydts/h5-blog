@@ -1,0 +1,112 @@
+body{
+	font-family: "微软雅黑";
+	padding-top: 70px;
+}
+ul , li{
+	padding: 0;
+	margin: 0;
+}
+
+
+/*文章图片开始*/
+#articleBigImg{
+	box-shadow: 8px 14px 38px rgba(39,44,49,0.06), 1px 3px 8px rgba(39,44,49,0.03);
+	border-radius: 5px;
+	margin-top: 40px;
+}
+/*文章图片结束*/
+/*文章内容开始*/
+#articleContentArround{
+	position: relative;
+	top: -150px;
+	padding:70px 100px 0; 
+	background-color: white;
+
+}
+.content{
+	width: 100%;
+
+}
+
+/*文章内容结束*/
+/*评论开始*/
+.comment{
+	width: 100%;
+	height: 800px;
+	background-color: #f4f8fb;
+}
+.comment .container{
+	height: 100%;
+}
+.commet-title{
+	   text-align: center;
+    padding: 40px 0;
+    color: #738a94;
+}
+.comment #comment {
+    position: relative;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    border: 0;
+    resize: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+.comment .item {
+    margin-bottom: 40px;
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    list-style: none;
+    padding: 20px;
+}
+.introduction{
+	height: 60px;
+}
+.comment .item-img {
+    float: left;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.04);
+    margin: 0 20px 20px 0;
+    background-size: cover;
+    background-position: center center;
+}
+.comment .item-name{
+
+	 padding-top: 12px;
+}
+.comment-content{
+	    line-height: 1.65;
+    font-size: 16px;
+    word-break: break-word;
+}
+/*评论结束*/
+/*footer开始*/
+footer{
+    font-size: 13px;
+    padding: 20px 0;
+    background-color: #090a0b;
+    color: #fff;
+    height: 100px;
+    width: 100%;
+}
+.footerWrapper{
+	max-width: 1040px;
+    margin: 0 auto;
+	height: 100%;
+}
+.footerWrapper .footerLeft{
+	float: left;
+}
+.footerWrapper .footerRight{
+	float: right;
+}
+
+/*footer结束*/

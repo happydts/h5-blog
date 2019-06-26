@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>youngdeng's Blog</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/uikit.gradient.min.css" />
+		
+		<link rel="shortcut icon" href="favicon.ico"  type="image/x-icon"/>
+			
+		<!-- Bootstrap -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/article.css" />
+
+		<style type="text/css">
+			@media (min-width: 1200px) {
+				.container {
+					width: 1040px;
+				}
+			}
+			
+			@media (min-width: 1500px) {
+				.uk-container {
+					max-width: 1400px;
+					padding: 0 35px;
+					margin: 0 auto;
+				}
+			}
+			
+			@media (max-width: 1500px) {
+				.uk-container {
+					margin: 0 auto;
+				}
+			}
+			
+			@media (max-width: 1230px) {
+				#articleBigImg {
+					display: none;
+				}
+				#articleContentArround {
+					background-color: none;
+					position: relative;
+					top: 0;
+					padding: 10px;
+				}
+				#lanren {
+					display: none;
+				}
+			}
+			
+			#lanren {
+				width: 156px;
+				height: 156px;
+				position: absolute;
+				bottom: 100px;
+				left: 20px;
+				background: url(img/foxtail.png) no-repeat 0 0;
+				animation: animate-tail 3.75s steps(44) infinite;
+			}
+			
+			@keyframes animate-tail {
+				0% {
+					background-position: -6864px 0;
+				}
+				100% {
+					background-position: 0 0;
+				}
+			}
+		</style>
+
+	</head>
+
+	<body style="position: relative;">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+					<a class="navbar-brand" href="index.html">youngdeng</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="index.html">首页<span class="sr-only">(current)</span></a>
+						</li>
+						<li><a href="photo.html">照片墙</a></li>
+						<li>
+							<a href="label.html">标签墙</a>
+						</li>
+						<li>
+							<a href="archived.html">存档</a>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+						</li>
+						<li>
+							<a href="login.html">后台登录</a>
+						</li>
+
+					</ul>
+
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+		<div class="container">
+			<article class="uk-article">
+				<h1 class="uk-article-title uk-width-medium-1-2 uk-container-center" style="color: #333;
+    font-size: 4rem;
+    font-weight: bold;">Elasticsearch 技术分析</h1>
+				<p class="uk-article-meta uk-width-medium-1-3 uk-container-center">由 youngdeng 撰写于 2019年6月2日 | 发表在 博客</p>
+			</article>
+		</div>
+		<div class="uk-container">
+			<img id="articleBigImg" src="img/5.jpg" class="uk-container-center" />
+		</div>
+		<div class="container" id="articleContentArround">
+			<div class="content">
+				<article class="uk-article">
+					<h1>简介</h1>
+					<br />
+					<p class="uk-article-lead">Elasticsearch是一个高度可扩展的、开源的、基于 Lucene 的全文搜索和分析引擎。它允许您快速，近实时地存储，搜索和分析大量数据，并支持多租户。</p>
+					<img src="img/article1-1.jpg" />
+					<p class="uk-article-lead">Elasticsearch也使用Java开发并使用 Lucene 作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的 RESTful API 来隐藏 Lucene 的复杂性，从而让全文搜索变得简单。</p>
+					<br />
+					<p class="uk-article-lead">不过，Elasticsearch 不仅仅是 Lucene 和全文搜索，我们还能这样去描述它：</p>
+					<br />
+					<h1>版本选择</h1>
+					<p class="uk-article-lead">在决定使用 Elasticsearch 的时候首先要考虑的是版本问题，Elasticsearch 目前有三个常用的稳定的主版本：2.x，5.x，6.x（排除 0.x 和 1.x）。</p>
+					<ul>
+						 <li><strong>版本问题</strong> 2.x 版本较老，无法体验新功能，且性能不如 5.x。 6.x 版本有点新，网上资料相对比较少（开发时间充足的可以研究）。</li>
+						<li><strong>数据迁移</strong> 2.x 版本数据可以直接迁移到 5.x； 5.X 版本的数据可以直接迁移到 6.x； 但是 2.x 版本数据无法直接迁移到 6.x。</li>
+						<li><strong>周边工具</strong> 2.x 版本周边工具版本比较混乱；Kibana 等工具的对应版本需要自己查，不好匹配。 5.x 之后 Kibana 等工具的主版本号进行了统一。</li>
+						<li><strong>Sql 语法支持</strong> 2.x，5.x，6.x 都可以安装 Elasticsearch-sql 插件，使用熟悉的SQL语法查询 Elasticsearch。 6.3.0 以后内置支持 SQL 模块，这个 SQL 模块是属于 X-Pack 的一部分。</li>
+					</ul>
+				
+
+				</article>
+
+			</div>
+
+		</div>
+
+		<div class="comment">
+			<div class="container">
+				<div class="commet-title">评论</div>
+				<textarea rows="3" id="comment" placeholder="评论只能两到三个字符！"></textarea>
+				<ul id="comments">
+					<li class="item">
+						<div class="introduction">
+							<div class="item-img" style="background-image: url(img/760706.jpg)"></div>
+							<div class="item-name">
+								<a href="#" target="_blank">88250</a>
+
+							</div>
+
+						</div>
+						<div class="comment-content">
+							<p>评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论</p>
+							<p>
+								<a href="http://123.207.98.199">https://youngdeng.com</a>
+							</p>
+							<p>我也在学习，有空多多交流 😄</p>
+
+						</div>
+					</li>
+					<li class="item">
+						<div class="introduction">
+							<div class="item-img" style="background-image: url(img/760706.jpg)"></div>
+							<div class="item-name">
+								<a href="#" target="_blank">88250</a>
+
+							</div>
+
+						</div>
+						<div class="comment-content">
+							<p>评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论</p>
+							<p>
+								<a href="http://123.207.98.199">https://youngdeng.com</a>
+							</p>
+							<p>我也在学习，有空多多交流 😄</p>
+
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="lanren">
+
+		</div>
+		<footer>
+			<div class="footerWrapper">
+				<div class="footerLeft">
+					&copy; 2019
+					<a href="#">youndeng的博客</a>
+					&nbsp;•&nbsp; Powered by
+					<a href="#" target="_blank">youngdeng</a>
+					<br> Theme
+					<a rel="friend" href="#" target="_blank">youngdeng</a>
+					<sup>[<a href="#" target="_blank">ref</a>]</sup> by
+					<a href="#" target="_blank">youndeng</a>
+
+				</div>
+				<div class="footerRight">
+					<a href="#" rel="section">
+						标签墙
+					</a>
+					&nbsp;•&nbsp;
+					<a href="#">
+						存档
+					</a>
+					&nbsp;•&nbsp;
+					<a rel="archive" href="http://123.207.98.199">
+						友情链接
+					</a>
+					<br> 396 文章 &nbsp; 1,642 评论 &nbsp; 3256527 浏览 &nbsp; 7 当前访客
+
+				</div>
+			</div>
+		</footer>
+		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+		<script src="js/jquery-1.11.0.min.js"></script>
+		<script src="js/uikit.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
+	</body>
+
+</html>
